@@ -1,0 +1,85 @@
+<div class="container" style="padding-top: 10px;">
+    <div class="card">
+        <div class="card-header">
+            Featured
+        </div>
+        <div class="card-body  pl-4">
+            <div>
+                <div>
+                    <p class="login-card-description">Data pemilik tabungan</p>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Nama anggota</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <?= $anggota['nama_anggota'] ?>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Nomor anggota</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <?= $anggota['username'] ?>
+                        </div>
+                    </div>
+                    <hr>
+                    <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
+                    <div class="inner">
+                        <form name="add_name" id="add_name">
+                            <div class="table-responsive" id="row">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td><input type="text" name="name[]" placeholder="Enter your Name" class="form-control name_list" /></td>
+                                        <td><input type="number" name="name[]" placeholder="Enter your Name" class="form-control name_list" /></td>
+                                        <td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td>
+                                    </tr>
+                                </table>
+                                <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
+                                <hr>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="form-group mt-3" id="dynamic_field">
+
+                    </div>
+
+                    </html>
+
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        var i = 1;
+        $('#add').click(function() {
+            i++;
+            $('.inner').appendTo('#dynamic_field');
+        });
+        $(document).on('click', '.btn_remove', function() {
+            var button_id = $(this).attr("id");
+            $('#row' + button_id + '').remove();
+        });
+        $('#submit').click(function() {
+            $.ajax({
+                url: "ProsesBankController/KirimTabungan",
+                method: "POST",
+                data: $('#add_name').serialize(),
+                success: function(data) {
+                    alert(data);
+                    $('#add_name')[0].reset();
+                }
+            });
+        });
+    });
+</script>
